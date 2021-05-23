@@ -9,9 +9,9 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
 
         if @user.save 
-            render json: @user
+            render json: @user, status: 201
         else
-            render json: @user.errors
+            render json: { errors: @user.errors }, status: 422
         end
     end
 
@@ -21,13 +21,13 @@ class UsersController < ApplicationController
         if @user.update(user_params)
             render json: @user 
         else
-            render json: @user.errors 
+            render json: { errors: @user.errors }, status: 422 
         end
     end
 
     def destroy
-        @user = User.find(params[:id])
-        @user.destroy
+        user = User.find(params[:id])
+        user.destroy
     end
 
     private
