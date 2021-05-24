@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable # , :validatable
 
   validates_uniqueness_of :auth_token
+  validates_format_of :email,:with => Devise::email_regexp
 end
