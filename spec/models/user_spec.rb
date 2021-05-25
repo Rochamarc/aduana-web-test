@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user) { build(:user) }
 
+  it { is_expected.to have_many(:posts).dependent(:destroy) }
+
   context 'table fields' do 
     it { is_expected.to have_db_column(:email).of_type(:string) }
     it { is_expected.to have_db_column(:encrypted_password).of_type(:string) }
