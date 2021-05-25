@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     end
 
     def destroy 
-        user = User.find_by(auth_token: params[:id])
+        user = current_user
         user.generate_authentication_token!
         user.save
         head 204
