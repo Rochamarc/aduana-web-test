@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+    before_action :authenticate_with_token!, only: [:update, :destroy]
+
     def show
         @user = User.find(params[:id])
 
@@ -16,7 +18,7 @@ class UsersController < ApplicationController
     end
 
     def update
-        @user = User.find(params[:id])
+        @user = current_user
 
         if @user.update(user_params)
             render json: @user 
@@ -26,8 +28,7 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        user = User.find(params[:id])
-        user.destroy
+        current_user.destroy
     end
 
     private
