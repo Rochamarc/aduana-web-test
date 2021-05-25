@@ -8,6 +8,8 @@ class User < ApplicationRecord
   before_create :generate_authentication_token!
   validates_format_of :email,:with => Devise::email_regexp
 
+  has_many :posts, dependent: :destroy
+
   def generate_authentication_token!
     begin
       self.auth_token = Devise.friendly_token
