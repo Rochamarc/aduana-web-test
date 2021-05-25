@@ -4,10 +4,15 @@ RSpec.describe 'Users API', type: :request do
     let(:user) { create(:user) } # create a user
     let(:user_id) { user.id } # get this users id
     let(:user_email ) { user.email }
-    
+    let(:headers) do {
+        'Authorization' => user.auth_token 
+        }
+    end
+
     describe 'GET /users/:id' do 
         before do
-            get "/users/#{user_id}"  
+            get "/users/#{user_id}", params: {}, headers: headers
+
         end
 
         context "when user exists" do 
@@ -60,7 +65,7 @@ RSpec.describe 'Users API', type: :request do
 
     describe 'PUT /users/:id' do 
         before do 
-            put "/users/#{user_id}", params: { user: user_params }
+            put "/users/#{user_id}", params: { user: user_params }, headers: headers
         end
 
         context 'when the requests params are valid' do
@@ -92,7 +97,7 @@ RSpec.describe 'Users API', type: :request do
 
     describe 'DELETE /users/:id' do
         before do 
-            delete "/users/#{user_id}"
+            delete "/users/#{user_id}", params: {}, headers: headers
         end
 
         it 'returns status code 204' do
