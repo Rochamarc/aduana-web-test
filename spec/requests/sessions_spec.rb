@@ -4,13 +4,13 @@ RSpec.describe 'Sesisons API', type: :request do
     let(:user) { create(:user) }
     let(:headers) do 
         {
-            'Content-Type' => Mime[:json].to_s 
+            'Authorization' => user.auth_token
         }
     end
 
     describe 'POST /sessions' do 
         before do
-            post '/sessions', params: { session: credentials }.to_json, headers: headers
+            post '/sessions', params: { session: credentials }, headers: headers
         end
 
         context 'when the credentials are correct' do 
